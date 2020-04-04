@@ -4,6 +4,8 @@ import com.github.leenkhan.jetcache.utils.DateUint;
 
 public interface CacheContext<K,V> {
 
+    //CacheContext getContext();
+
     V put(K key, V value);
 
     V put(K key, V value, DateUint uint, int expireDate);
@@ -11,5 +13,7 @@ public interface CacheContext<K,V> {
     V get(K key);
 
     V remove(K key);
+
+    long count();
 
 }
