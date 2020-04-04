@@ -45,14 +45,17 @@ public class CacheAccessHandler implements HttpHandler {
                 case "GET":
                     Object v = cacheContext.get(key);
                     writeReturn(httpExchange, v.toString());
+                    if(v==null){
+                        writeValueIsNull(httpExchange);
+                    }
                     break;
                 case "POST":
                     cacheContext.put(key, body);
-                    writeReturn(httpExchange, "put ok");
+                    writeReturn(httpExchange, "ok");
                     break;
                 case "DELETE":
                     cacheContext.remove(key);
-                    writeReturn(httpExchange, "remove ok");
+                    writeReturn(httpExchange, "ok");
                     break;
             }
             System.out.println(String.format("request method:{}, key:{},value:{}",method, key, body ));
