@@ -1,6 +1,7 @@
 package com.github.leenkhan.jetcache.server.handler;
 
 import com.github.leenkhan.jetcache.cache.CacheContext;
+import com.github.leenkhan.jetcache.constants.Constants;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -28,11 +29,11 @@ public class CacheAccessHandler implements HttpHandler {
             String method = requestMethod.toUpperCase();
             Headers requestHeaders = httpExchange.getRequestHeaders();
             String key = null;
-            if(!requestHeaders.containsKey("cacahe_key")){
+            if(!requestHeaders.containsKey(Constants.HTTP_ACCESS_HEADER_KEY_NAME)){
                 writeReturn(httpExchange, "paramter error");
                 return;
             }
-            List values = requestHeaders.get("cacahe_key");
+            List values = requestHeaders.get(Constants.HTTP_ACCESS_HEADER_KEY_NAME);
             key = values.toString();
             if(key == null || key.length()<1){
                 writeReturn(httpExchange, "key is null");
@@ -58,7 +59,7 @@ public class CacheAccessHandler implements HttpHandler {
                     writeReturn(httpExchange, "ok");
                     break;
             }
-            System.out.println(String.format("request method:{}, key:{},value:{}",method, key, body ));
+            System.out.println(String.format("request method:%s, key:%s",method, key ));
         }else {
             httpExchange.sendResponseHeaders(200, 0);
             OutputStream os = httpExchange.getResponseBody();
