@@ -45,9 +45,10 @@ public class CacheAccessHandler implements HttpHandler {
             switch (method){
                 case "GET":
                     Object v = cacheContext.get(key);
-                    writeReturn(httpExchange, v.toString());
                     if(v==null){
                         writeValueIsNull(httpExchange);
+                    }else {
+                        writeReturn(httpExchange, v.toString());
                     }
                     break;
                 case "POST":
